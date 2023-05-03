@@ -1,2 +1,4 @@
-package Logic;public class Tree {
+package Logic;
+
+public class Tree {
 }
