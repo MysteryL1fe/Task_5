@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Tree<T> {
     private Node<T> root = null;
-    private List<String[]> pairs = new ArrayList<>();
+    private final List<String[]> pairs = new ArrayList<>();
 
     public Tree() {}
 
@@ -17,32 +17,70 @@ public class Tree<T> {
     }
 
     public void add(T value, String path) throws WrongPathException {
+        if (path == null) throw new WrongPathException();
+        if (path.isEmpty()) root.setValue(value);
+        else {
+            Node<T> parent = getNodeByPath(path.substring(0, path.length() - 2));
+            char lastBranch = path.charAt(path.length() - 1);
+            if (lastBranch == 'l' && parent.left == null) parent.left = new Node<>(value);
+            else if (lastBranch == 'r' && parent.right == null) parent.right = new Node<>(value);
+            else throw new WrongPathException();
+        }
+    }
 
+    public void change(T value, String path) throws WrongPathException {
+        getNodeByPath(path).setValue(value);
+    }
+
+    public void delete(String path) throws WrongPathException {
+        if (path == null) throw new WrongPathException();
+        if (path.isEmpty()) root = null;
+        else {
+            Node<T> parent = getNodeByPath(path.substring(0, path.length() - 2));
+            char lastBranch = path.charAt(path.length() - 1);
+            if (lastBranch == 'l') parent.left = null;
+            else if (lastBranch == 'r') parent.right = null;
+            else throw new WrongPathException();
+        }
+    }
+
+    private Node<T> getNodeByPath(String path) throws WrongPathException {
+        if (path == null) throw new WrongPathException();
+        if (path.isEmpty()) return root;
+        Node<T> node = root;
+        for (Character c : path.toCharArray()) {
+            if (c == 'l' && node.left != null) node = node.left;
+            else if (c == 'r' && node.right != null) node = node.right;
+            else throw new WrongPathException();
+        }
+        return node;
     }
 
     public List<String[]> findPairs() throws EmptyTreeException {
         if (root == null) throw new EmptyTreeException();
         try {
             findPairsForNode(root, "");
-        } catch (NullableNodeException e) {
+        } catch (NullableNodeException | WrongPathException e) {
+            //something went wrong
             System.out.println(e);
         }
         return pairs;
     }
 
-    private List<String> findPairsForNode(Node<T> node, String pathToNode) throws NullableNodeException {
+    private List<String> findPairsForNode(Node<T> node, String pathToNode)
+            throws NullableNodeException, WrongPathException {
         if (node == null) throw new NullableNodeException();
         List<String> result = new ArrayList<>();
         List<String> leftChildPairs = null, rightChildPairs = null;
         if (node.left == null && node.right == null) {
-            //Tree hasn't children => need to check pairs
+            // Tree hasn't children => need to check pairs
             result = findPairsForSimpleNode(node, pathToNode);
         } else if ((node.left == null ||
                 (leftChildPairs = findPairsForNode(node.left, pathToNode + "l")).size() != 0)
                 && (node.right == null ||
                 (rightChildPairs = findPairsForNode(node.right, pathToNode + "r")).size() != 0)) {
-            //Both child of node has pairs => node may have child need to check
-            findPairsForNodeWithChildren(node, pathToNode, leftChildPairs, rightChildPairs);
+            // Both child of node has pairs => node may have child need to check
+            result = findPairsForNodeWithChildren(node, pathToNode, leftChildPairs, rightChildPairs);
         }
         return result;
     }
@@ -50,28 +88,41 @@ public class Tree<T> {
     private List<String> findPairsForSimpleNode(Node<T> node, String pathToNode) throws NullableNodeException {
         if (node == null) throw new NullableNodeException();
         List<String> result = new ArrayList<>();
-        String pairNode;
-
-
+        PreorderNodePathIterator pathIterator = new PreorderNodePathIterator(node);
+        // finding similar nodes
+        while (pathIterator.hasNext()) {
+            Node<T> curNode = pathIterator.next();
+            if (curNode.left == null && curNode.right == null && curNode.value == node.value)
+                result.add(pathIterator.nextPath());
+        }
+        // adding similar nodes to pairs
         for (String pathToPair : result) pairs.add(new String[] {pathToNode, pathToPair});
         return result;
     }
 
-    private List<String> findPairsForNodeWithChildren(Node<T> node, String pathToNode, List<String> leftChildPairs,
-                                                      List<String> rightChildPairs) throws NullableNodeException {
+    private List<String> findPairsForNodeWithChildren(Node<T> node, String pathToNode,
+                                                      List<String> leftChildPairs, List<String> rightChildPairs)
+            throws NullableNodeException, WrongPathException {
         if (node == null) throw new NullableNodeException();
         List<String> result = new ArrayList<>();
 
+        // finding pairs for node
+        for (String leftChildPair : leftChildPairs) {
+            for (String rightChildPair : rightChildPairs) {
+                // if the pairs for the left and right child elements differ only in the last branching
+                // then the parent element of the pairs can be a pair for our node if their values are similar
+                String maybePair;
+                if ((maybePair = leftChildPair.substring(0, leftChildPair.length() - 2))
+                        .equals(rightChildPair.substring(0, rightChildPair.length() - 2))
+                        && node.value.equals(getNodeByPath(maybePair).value)) {
+                    result.add(maybePair);
+                }
+            }
+        }
+
+        // adding similar nodes to pairs
         for (String pathToPair : result) pairs.add(new String[]{pathToNode, pathToPair});
         return result;
-    }
-
-    protected Iterator<Node<T>> nodeIterator() {
-        return new PreorderNodeIterator();
-    }
-
-    public Iterator<T> iterator() {
-        return new PreorderIterator();
     }
 
     protected class Node<T> {
@@ -139,31 +190,45 @@ public class Tree<T> {
         }
     }
 
-    private class PreorderNodePathIterator implements Iterator<String> {
+    private class PreorderNodePathIterator implements Iterator<Node<T>> {
         private final Stack<Node<T>> nodeStack;
-        //ToDo code path iterator
-        private final String path;
+        private final Stack<String> pathStack;
+        private String lastPath;
 
         public PreorderNodePathIterator() {
             nodeStack = new Stack<>();
-            path = "";
+            pathStack = new Stack<>();
             if (root != null) nodeStack.push(root);
+        }
+
+        public PreorderNodePathIterator(Node<T> startNode) {
+            this();
+            Node<T> curNode = null;
+            while (hasNext() && (curNode = next()) != startNode) {}
         }
 
         @Override
         public boolean hasNext() {
-            return !nodeStack.isEmpty();
+            return !nodeStack.isEmpty() && !pathStack.isEmpty();
         }
 
         @Override
-        public String next() {
+        public Node<T> next() {
             Node<T> node = nodeStack.pop();
+            lastPath = pathStack.pop();
             if (node.right != null) {
                 nodeStack.push(node.right);
-                path+=
+                pathStack.push(lastPath + "r");
             }
-            if (node.left != null) stack.push(node.left);
-            return stringStack.pop();
+            if (node.left != null) {
+                nodeStack.push(node.left);
+                pathStack.push(lastPath + "l");
+            }
+            return node;
+        }
+
+        public String nextPath() {
+            return lastPath;
         }
     }
 
