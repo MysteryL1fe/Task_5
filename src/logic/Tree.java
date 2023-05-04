@@ -18,9 +18,10 @@ public class Tree<T> {
 
     public void add(T value, String path) throws WrongPathException {
         if (path == null) throw new WrongPathException();
-        if (path.isEmpty()) root.setValue(value);
+        if (path.isEmpty() && root != null) throw new WrongPathException();
+        else if (path.isEmpty()) root = new Node<>(value);
         else {
-            Node<T> parent = getNodeByPath(path.substring(0, path.length() - 2));
+            Node<T> parent = getNodeByPath(path.substring(0, path.length() - 1));
             char lastBranch = path.charAt(path.length() - 1);
             if (lastBranch == 'l' && parent.left == null) parent.left = new Node<>(value);
             else if (lastBranch == 'r' && parent.right == null) parent.right = new Node<>(value);
@@ -36,7 +37,7 @@ public class Tree<T> {
         if (path == null) throw new WrongPathException();
         if (path.isEmpty()) root = null;
         else {
-            Node<T> parent = getNodeByPath(path.substring(0, path.length() - 2));
+            Node<T> parent = getNodeByPath(path.substring(0, path.length() - 1));
             char lastBranch = path.charAt(path.length() - 1);
             if (lastBranch == 'l') parent.left = null;
             else if (lastBranch == 'r') parent.right = null;
@@ -113,8 +114,8 @@ public class Tree<T> {
                 // if the pairs for the left and right child elements differ only in the last branching
                 // then the parent element of the pairs can be a pair for our node if their values are equals
                 String maybePair;
-                if ((maybePair = leftChildPair.substring(0, leftChildPair.length() - 2))
-                        .equals(rightChildPair.substring(0, rightChildPair.length() - 2))
+                if ((maybePair = leftChildPair.substring(0, leftChildPair.length() - 1))
+                        .equals(rightChildPair.substring(0, rightChildPair.length() - 1))
                         && node.value.equals(getNodeByPath(maybePair).value)) {
                     result.add(maybePair);
                 }
@@ -199,7 +200,10 @@ public class Tree<T> {
         public PreorderNodePathIterator() {
             nodeStack = new Stack<>();
             pathStack = new Stack<>();
-            if (root != null) nodeStack.push(root);
+            if (root != null) {
+                nodeStack.push(root);
+                pathStack.push("");
+            }
         }
 
         public PreorderNodePathIterator(Node<T> startNode) {
