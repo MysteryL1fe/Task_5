@@ -92,6 +92,7 @@ public class Tree<T> {
         // finding similar nodes
         while (pathIterator.hasNext()) {
             Node<T> curNode = pathIterator.next();
+            // check if potential pair is simple node & it's value equals to our node's value
             if (curNode.left == null && curNode.right == null && curNode.value == node.value)
                 result.add(pathIterator.nextPath());
         }
@@ -110,7 +111,7 @@ public class Tree<T> {
         for (String leftChildPair : leftChildPairs) {
             for (String rightChildPair : rightChildPairs) {
                 // if the pairs for the left and right child elements differ only in the last branching
-                // then the parent element of the pairs can be a pair for our node if their values are similar
+                // then the parent element of the pairs can be a pair for our node if their values are equals
                 String maybePair;
                 if ((maybePair = leftChildPair.substring(0, leftChildPair.length() - 2))
                         .equals(rightChildPair.substring(0, rightChildPair.length() - 2))

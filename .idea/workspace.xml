@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="454e050a-334d-4a03-a2c9-2a5c82b6787e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/logic/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/Tree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,12 +57,20 @@
       <option name="project" value="LOCAL" />
       <updated>1683214937462</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Logic complete (?)">
+      <created>1683236924839</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1683236924839</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Project created" />
     <MESSAGE value="Simple Tree Logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Simple Tree Logic" />
+    <MESSAGE value="Logic complete (?)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Logic complete (?)" />
   </component>
 </project>
