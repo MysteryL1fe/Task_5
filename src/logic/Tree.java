@@ -126,7 +126,7 @@ public class Tree<T> {
         return result;
     }
 
-    protected class Node<T> {
+    protected static class Node<T> {
         private Node<T> left, right;
         private T value;
 
