@@ -72,7 +72,8 @@ public class Tree<T> {
             throws NullableNodeException, WrongPathException {
         if (node == null) throw new NullableNodeException();
         List<String> result = new ArrayList<>();
-        List<String> leftChildPairs = null, rightChildPairs = null;
+        List<String> leftChildPairs = new ArrayList<>();
+        List<String> rightChildPairs = new ArrayList<>();
         if (node.left == null && node.right == null) {
             // Tree hasn't children => need to check pairs
             result = findPairsForSimpleNode(node, pathToNode);
