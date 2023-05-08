@@ -21,7 +21,7 @@ public class Tree<T> {
         if (path.isEmpty() && root != null) throw new WrongPathException();
         else if (path.isEmpty()) root = new Node<>(value);
         else {
-            Node<T> parent = getNodeByPath(path.substring(0, path.length() - 1));
+            Node<T> parent = getNode(path.substring(0, path.length() - 1));
             char lastBranch = path.charAt(path.length() - 1);
             if (lastBranch == 'l' && parent.left == null) parent.left = new Node<>(value);
             else if (lastBranch == 'r' && parent.right == null) parent.right = new Node<>(value);
@@ -30,14 +30,14 @@ public class Tree<T> {
     }
 
     public void change(T value, String path) throws WrongPathException {
-        getNodeByPath(path).setValue(value);
+        getNode(path).setValue(value);
     }
 
     public void delete(String path) throws WrongPathException {
         if (path == null) throw new WrongPathException();
         if (path.isEmpty()) root = null;
         else {
-            Node<T> parent = getNodeByPath(path.substring(0, path.length() - 1));
+            Node<T> parent = getNode(path.substring(0, path.length() - 1));
             char lastBranch = path.charAt(path.length() - 1);
             if (lastBranch == 'l') parent.left = null;
             else if (lastBranch == 'r') parent.right = null;
@@ -45,7 +45,11 @@ public class Tree<T> {
         }
     }
 
-    private Node<T> getNodeByPath(String path) throws WrongPathException {
+    private T get(String path) throws WrongPathException {
+        return getNode(path).getValue();
+    }
+
+    private Node<T> getNode(String path) throws WrongPathException {
         if (path == null) throw new WrongPathException();
         if (path.isEmpty()) return root;
         Node<T> node = root;
@@ -117,7 +121,7 @@ public class Tree<T> {
                 String maybePair;
                 if ((maybePair = leftChildPair.substring(0, leftChildPair.length() - 1))
                         .equals(rightChildPair.substring(0, rightChildPair.length() - 1))
-                        && node.value.equals(getNodeByPath(maybePair).value)) {
+                        && node.value.equals(getNode(maybePair).value)) {
                     result.add(maybePair);
                 }
             }
