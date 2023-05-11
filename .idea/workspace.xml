@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="454e050a-334d-4a03-a2c9-2a5c82b6787e" name="Changes" comment="Task ready (please...)">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/MainFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/TreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/TreeNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logic/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/Tree.java" afterDir="false" />
-    </list>
+    <list default="true" id="454e050a-334d-4a03-a2c9-2a5c82b6787e" name="Changes" comment="Task ready (please...)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683308385865</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Task ready (please...)">
+      <created>1683804971352</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1683804971352</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

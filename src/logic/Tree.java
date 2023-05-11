@@ -128,7 +128,7 @@ public class Tree<T> implements Iterable<T> {
             }
         } else if (!hasRight) { // node has only left child
             for (String leftChildPair : leftChildPairs) {
-                // if the parent of the pair for the right child does not have a left child
+                // if the parent of the pair for the left child does not have a right child
                 // then it can be a pair for our node
                 String maybePair = leftChildPair.substring(0, leftChildPair.length() - 1);
                 Node<T> maybePairNode;
@@ -139,12 +139,12 @@ public class Tree<T> implements Iterable<T> {
             // finding pairs for node
             for (String leftChildPair : leftChildPairs) {
                 for (String rightChildPair : rightChildPairs) {
-                    // if paths to the pairs for the left and right child elements are equals then this pair isn't
+                    // if paths to the pairs for the left and right children are equals then this pair isn't
                     // suitable for us
                     if (leftChildPair.equals(rightChildPair)) continue;
 
-                    // if paths to the pairs for the left and right child elements differ only in the last branching
-                    // then the parent element of the pairs can be a pair for our node if their values are equals
+                    // if paths to the pairs for the left and right children differ only in the last branching
+                    // then the parent of the pairs can be a pair for our node if their values are equals
                     String maybePair;
                     Node<T> maybePairNode;
                     if ((maybePair = leftChildPair.substring(0, leftChildPair.length() - 1))
