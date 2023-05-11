@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="454e050a-334d-4a03-a2c9-2a5c82b6787e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/UI/TreeNode.java" afterDir="false" />
+    <list default="true" id="454e050a-334d-4a03-a2c9-2a5c82b6787e" name="Changes" comment="Task ready (please...)">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/MainFrame.form" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/TreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/TreeNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/logic/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/Tree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,11 +108,34 @@
     <option name="localTasksCounter" value="8" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Project created" />
     <MESSAGE value="Simple Tree Logic" />
     <MESSAGE value="Logic complete (?)" />
     <MESSAGE value="Logic complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Logic complete" />
+    <MESSAGE value="Task ready (please...)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Task ready (please...)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/UI/MainFrame.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
